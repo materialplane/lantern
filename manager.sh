@@ -22,6 +22,30 @@ status() {
     if [ ! -z "$UI_PID" ]; then echo "UI is RUNNING (PID: $UI_PID)"; else echo "UI is STOPPED"; fi
 }
 
+deploy() {
+    echo "--------------------------------------------------"
+    echo "DEPLOYING TO GITHUB (BRANCH: dev)..."
+    echo "--------------------------------------------------"
+    
+    # Ensure we are on the dev branch
+    CURRENT_BRANCH=$(git rev-parse --abbrev-ref HEAD)
+    if [ "$CURRENT_BRANCH" != "dev" ]; then
+        echo "ERROR: Not on 'dev' branch. Current branch: $CURRENT_BRANCH"
+        exit 1
+    fi
+
+    git add .
+    COMMIT_MSG="Auto-deploy via manager.sh: $(date '+%Y-%m-%d %H:%M:%S')"
+    git commit -m "$COMMIT_MSG"
+    
+    echo "Pushing to origin dev..."
+    git push origin dev
+    
+    echo "--------------------------------------------------"
+    echo "DEPLOY COMPLETE"
+    echo "--------------------------------------------------"
+}
+
 stop() {
     echo "Stopping Lantern Ecosystem..."
     
@@ -63,5 +87,6 @@ case "$1" in
     stop) stop ;;
     restart) start ;;
     status) status ;;
-    *) echo "Usage: $0 {start|stop|restart|status}"; exit 1 ;;
+    deploy) deploy ;;
+    *) echo "Usage: $0 {start|stop|restart|status|deploy}"; exit 1 ;;
 esac

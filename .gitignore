@@ -1,25 +1,33 @@
-# Node.js
+# --- CORE IGNORES ---
 node_modules/
 npm-debug.log
 yarn-error.log
-
-# Environment
 .env
 .sudo_pass
-
-# Logs
-logs/*.log
-logs/restore_points.txt
-
-# Databases
-gdd-studio/server/search_index.db
-
-# OS Files
+logs/
 .DS_Store
 Thumbs.db
+*.pid
 
-# Build
+# --- BUILD & CACHE ---
 gdd-studio/client/dist/
+gdd-studio/server/search_index.db
 
-# PID Files
-gdd-studio/server/*.pid
+# --- ACTIVE UPLOADS (Local Dev Only) ---
+gdd-studio/uploads/*
+!gdd-studio/uploads/.gitkeep
+
+# --- ASSETS & SCRIPTS (Exclude Archives) ---
+assets/archive/
+scripts/archive/
+assets/blackmarsh.jpg
+assets/world-map-4k.png
+assets/world-map-final.png
+assets/world-map-revert.png
+assets/world-map-epic-v2.png
+assets/world-map-lowres.png
+assets/world-map-with-roads.png
+
+# Keep the new client assets and tiles
+!gdd-studio/client/public/assets/
+!gdd-studio/client/public/tiles/
