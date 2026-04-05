@@ -31,3 +31,4 @@ assets/world-map-with-roads.png
 # Keep the new client assets and tiles
 !gdd-studio/client/public/assets/
 !gdd-studio/client/public/tiles/
+fantasy-generator/
