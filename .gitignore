@@ -1,0 +1,25 @@
+# Node.js
+node_modules/
+npm-debug.log
+yarn-error.log
+
+# Environment
+.env
+.sudo_pass
+
+# Logs
+logs/*.log
+logs/restore_points.txt
+
+# Databases
+gdd-studio/server/search_index.db
+
+# OS Files
+.DS_Store
+Thumbs.db
+
+# Build
+gdd-studio/client/dist/
+
+# PID Files
+gdd-studio/server/*.pid

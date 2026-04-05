@@ -1,0 +1,6 @@
+{
+  "id": "fire",
+  "name": "Fire Damage",
+  "status_effect": "Burn",
+  "description": "Intense heat that incinerates enemies and causes lingering damage over time."
+}

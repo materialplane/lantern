@@ -1,0 +1,64 @@
+# WORLD ENGINE: VISUAL TILE MAP & POI SYSTEM
+
+OBJECTIVE:
+Build a high-performance, zoomable, and visually stunning map engine for "Tales of Ethoria" that integrates directly with the Lantern GDD Registry.
+
+---
+
+## 1. TECHNICAL FOUNDATION
+- Engine: Leaflet.js (Standard for high-performance interactive maps).
+- Tiling Strategy: Use a Node.js 'Sharp' script to slice a high-resolution source map into 256x256 tiles across multiple zoom levels (0 to 5+).
+- Map Mode: Simple CRS (Coordinate Reference System) to treat the image as a flat Cartesian plane (perfect for fantasy worlds).
+
+---
+
+## 2. LANTERN INTEGRATION (THE DATA LINK)
+- Source of Truth: All location data (Lore, Blueprints, Metadata) resides in the Lantern Registry under a 'World_Map' container.
+- API Handoff: The Map Engine calls `GET http://lantern.local/api/entries/World_Map/[ID]` to fetch location details.
+- Zero Redundancy: Updating a city in Lantern automatically updates its info card on the map.
+
+---
+
+## 3. UI/UX: THE HERO CARD SYSTEM
+- Visual Style: Immersive glassmorphism, deep navy palette, and high-contrast typography.
+- Action: Clicking a Point of Interest (POI) marker opens a full-screen or large modal "Hero Card".
+- Content:
+    - Identity: Name, Region, Image.
+    - Intent: High-level summary from intent.json.
+    - Logic Tabs: Direct access to Blueprints or Architecture if required.
+
+---
+
+## 4. TECHNICAL WORKFLOW
+Phase 1: Environment Setup
+- Create `/world-engine` directory.
+- Initialize React/Vite map viewer.
+
+Phase 2: The Tiling Factory
+- Build `tile_processor.js` using the Sharp library.
+- Input: world-map.png (High Res).
+- Output: Hierarchical folder structure of /tiles/{z}/{x}/{y}.png.
+
+Phase 3: Marker & Interactivity Layer
+- Implement dynamic marker rendering from the Lantern API.
+- Build the "Hero Card" modal component.
+
+Phase 4: Editor Mode
+- Add a secure "Edit Mode" to drop pins by right-clicking.
+- Integrate with `POST /api/containers/World_Map/entries` to create new registry nodes instantly from the map.
+
+---
+
+## 5. FOOLPROOF SCALABILITY
+- Memory Safe: Only loads visible tiles (ideal for 30k+ pages or planet-sized maps).
+- Air-Gap Preserved: Map Engine uses the Lantern API only; no direct file manipulation.
+
+---
+
+## 6. MAP GENERATION PROTOCOL (BLACKMARSH)
+
+### SOURCE DESCRIPTION (FOR IMAGE-TO-IMAGE CONTEXT)
+The reference image is a black-and-white high-contrast schematic map of 'Blackmarsh'. It features a large central bay (Smoking Bay) that opens into a southern sea (The Grey Sea). Key landmarks include the Pendar Mountains to the west, the Dragonbone Peaks to the northeast, and the dense Greywoods in the upper-left quadrant. Geography is defined by intricate river systems (Rednut, Eamont, Lanis), rolling hills (The Crimson Hills), and island-dotted waters. Castles and keeps are marked throughout.
+
+### GEMINI IMAGE-TO-IMAGE PROMPT
+"Turn this reference image into a highly detailed, colorful ancient map of the world of Blackmarsh. The aesthetic should be a 4k stylized hand-painted fantasy RPG with chunky exaggerated proportions and dramatic rim lighting. Use a vibrant painterly finish with thick, expressive brushstrokes. Render the Greywoods in deep emerald greens, the Dragonbone Peaks in jagged granite with amber highlights, and the Smoking Bay in a rich sapphire-to-teal gradient. Apply a warm, golden sunset glow that catches the peaks of the mountains and the edges of the coastlines. Strictly no characters, no map icons, and no text labels. The map must extend fully to the edges of the image with no borders or parchment margins. 1:1 ratio."
